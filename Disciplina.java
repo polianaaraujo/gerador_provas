@@ -5,9 +5,11 @@ public class Disciplina {
     private Usuario usuario;
     private Professor professor;
 
-    public Disciplina(int codigo, String nome) {
+    public Disciplina(int codigo, String nome, Usuario usuario, Professor professor) {
         this.codigo = codigo;
         this.nome = nome;
+        this.usuario = usuario;
+        this.professor = professor;
         this.assuntos = new String[0]; // começa sem assuntos
     }
 
@@ -65,12 +67,12 @@ public class Disciplina {
         if (assunto != null && !assunto.isEmpty()) {
             String[] assuntosAtualizados = new String[assuntos.length + 1];
 
-            // copia os assuntos antigos
+            // copia os assuntos antigos para o novo vetor
             for (int i = 0; i < assuntos.length; i++) {
                 assuntosAtualizados[i] = assuntos[i];
             }
 
-            // adiciona o novo assunto
+            // adiciona o novo assunto na última posição
             assuntosAtualizados[assuntos.length] = assunto;
 
             // atualiza o vetor principal
@@ -81,7 +83,7 @@ public class Disciplina {
     public void removerAssunto(String assunto) {
         int posicao = -1;
 
-        // procura a posição do assunto
+        // procura a posição do assunto que será removido
         for (int i = 0; i < assuntos.length; i++) {
             if (assuntos[i].equals(assunto)) {
                 posicao = i;
@@ -92,7 +94,7 @@ public class Disciplina {
             String[] assuntosAtualizados = new String[assuntos.length - 1];
             int j = 0;
 
-            // copia tudo menos o removido
+            // copia todos os assuntos, menos o que será removido
             for (int i = 0; i < assuntos.length; i++) {
                 if (i != posicao) {
                     assuntosAtualizados[j] = assuntos[i];
