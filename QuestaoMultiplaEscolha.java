@@ -8,6 +8,18 @@ public class QuestaoMultiplaEscolha{
     private int nivelDificuldade;
     private String[] alternativas = new String[0];
 
+
+    //construtor
+    public QuestaoMultiplaEscolha(int codigo, String tipo, String enunciado, String gabarito, Disciplina disciplina, String assunto, int nivelDificuldade) {
+    setCodigo(codigo);
+    setTipo(tipo);
+    setEnunciado(enunciado);
+    setGabarito(gabarito);
+    setDisciplina(disciplina);
+    setAssunto(assunto);
+    setNivelDificuldade(nivelDificuldade);
+}
+
     //getters
     public int getCodigo() { return codigo; }
     public String getTipo() { return tipo; }
