@@ -5,7 +5,7 @@ public class Question {
     private String tipo;
     private String enunciado;
     private String gabarito;
-    private Discipline disciplina;
+    private Object disciplina;
     private String assunto;
     private int nivelDificuldade;
     private User usuario;
@@ -43,11 +43,11 @@ public class Question {
         this.gabarito = gabarito;
     }
 
-    public Discipline getDisciplina() {
+    public Object getDisciplina() {
         return disciplina;
     }
 
-    public void setDisciplina(Discipline disciplina) {
+    public void setDisciplina(Object disciplina) {
         this.disciplina = disciplina;
     }
 

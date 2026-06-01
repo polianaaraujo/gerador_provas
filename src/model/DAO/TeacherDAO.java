@@ -1,6 +1,6 @@
 package src.model.DAO;
 
-import src.model.entities.Admin;
+import src.model.entities.Teacher;
 import src.model.entities.User;
 import src.model.DAO.ConnectionFactory;
 
@@ -12,11 +12,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminDAO {
+public class TeacherDAO {
     
-    public void inserir(User user, Admin admin) {
+    public void inserir(User user, Teacher teacher) {
         String sqlUser = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
-        String sqlAdmin = "INSERT INTO admins (user_id) VALUES (?)";
+        String sqlTeacher = "INSERT INTO teachers (user_id, registration_number) VALUES (?, ?)";
         Connection conn = null;
 
         try {
@@ -27,7 +27,7 @@ public class AdminDAO {
             stmtUser.setString(1, user.getName());
             stmtUser.setString(2, user.getEmail());
             stmtUser.setString(3, user.getPassword());
-            stmtUser.setString(4, "user");
+            stmtUser.setString(4, "teacher"); // Define o papel como professor
             
             stmtUser.executeUpdate();
 
@@ -36,19 +36,92 @@ public class AdminDAO {
             if (rs.next()) {
                 idGerado = rs.getInt(1);
                 user.setIdUser(idGerado);
-                admin.setId(idGerado);
+                teacher.setId(idGerado); 
             }
 
-            PreparedStatement stmtAdmin = conn.prepareStatement(sqlAdmin);
-            stmtAdmin.setInt(1, idGerado);
-            stmtAdmin.executeUpdate();
+            PreparedStatement stmtTeacher = conn.prepareStatement(sqlTeacher);
+            stmtTeacher.setInt(1, idGerado);
+            stmtTeacher.setString(2, teacher.getResgistration_number()); 
+            stmtTeacher.executeUpdate();
             
             conn.commit(); 
 
-            // Fechar os recursos no final do processo
             rs.close();
             stmtUser.close();
-            stmtAdmin.close();
+            stmtTeacher.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    } 
+
+
+    public List<Teacher> listar() {
+        String sql = "SELECT u.user_id, u.name, u.email, u.password, u.role, t.registration_number " +
+                     "FROM users u INNER JOIN teachers t ON u.user_id = t.user_id";
+        
+        List<Teacher> listaTeachers = new ArrayList<>();
+
+        try {
+            Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Teacher teacher = new Teacher();
+                User user = new User();
+                
+                user.setIdUser(rs.getInt("user_id"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                teacher.setResgistration_number(rs.getString("registration_number")); // Puxa a matrícula
+                
+                listaTeachers.add(teacher);
+            }
+
+            // Fechar os recursos
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaTeachers;
+    }
+
+
+    public void atualizar(User user, Teacher teacher) {
+        String sqlUser = "UPDATE users SET name = ?, email = ?, password = ? WHERE user_id = ?";
+        String sqlTeacher = "UPDATE teachers SET registration_number = ? WHERE user_id = ?";
+        Connection conn = null;
+
+        try {
+            conn = ConnectionFactory.getConnection();
+            conn.setAutoCommit(false); // Transação, pois atualizamos duas tabelas
+
+            // Atualiza os dados base do utilizador
+            PreparedStatement stmtUser = conn.prepareStatement(sqlUser);
+            stmtUser.setString(1, user.getName());
+            stmtUser.setString(2, user.getEmail());
+            stmtUser.setString(3, user.getPassword());
+            stmtUser.setInt(4, user.getIdUser());
+            stmtUser.executeUpdate();
+
+            // Atualiza a matrícula na tabela de professores
+            PreparedStatement stmtTeacher = conn.prepareStatement(sqlTeacher);
+            stmtTeacher.setString(1, teacher.getResgistration_number());
+            stmtTeacher.setInt(2, user.getIdUser()); // Usa o mesmo ID
+            stmtTeacher.executeUpdate();
+
+            conn.commit();
+
+            // Fechar os recursos
+            stmtUser.close();
+            stmtTeacher.close();
             conn.close();
 
         } catch (SQLException e) {
@@ -61,68 +134,11 @@ public class AdminDAO {
                 }
             }
         }
-    } 
-
-
-    public List<User> listar() {
-        String sql = "SELECT u.user_id, u.name, u.email, u.password, u.role " +
-                     "FROM users u INNER JOIN admins a ON u.user_id = a.user_id";
-        
-        List<User> listaAdmins = new ArrayList<>();
-
-        try {
-            Connection conn = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                User user = new User();
-                user.setIdUser(rs.getInt("user_id"));
-                user.setName(rs.getString("name"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
-                
-                listaAdmins.add(user);
-            }
-
-            // Fechar os recursos
-            rs.close();
-            stmt.close();
-            conn.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
-        return listaAdmins;
-    }
-
-
-    public void atualizar(User user) {
-        String sql = "UPDATE users SET name = ?, email = ?, password = ? WHERE user_id = ?";
-
-        try {
-            Connection conn = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-
-            stmt.setString(1, user.getName());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPassword());
-            stmt.setInt(4, user.getIdUser());
-
-            stmt.executeUpdate();
-
-            // Fechar os recursos
-            stmt.close();
-            conn.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     
     public void deletar(int idUser) {
+        // Como o ON DELETE CASCADE está ativo, basta apagar de 'users'
         String sql = "DELETE FROM users WHERE user_id = ?";
 
         try {

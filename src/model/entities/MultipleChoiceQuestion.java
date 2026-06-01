@@ -5,7 +5,7 @@ public class MultipleChoiceQuestion {
     private String tipo;
     private String enunciado;
     private String gabarito;
-    private Discipline disciplina;
+    private Object disciplina;
     private String assunto;
     private int nivelDificuldade;
     private String[] alternativas = new String[0];
@@ -26,7 +26,7 @@ public class MultipleChoiceQuestion {
         return gabarito;
     }
 
-    public Discipline getDisciplina() {
+    public Object getDisciplina() {
         return disciplina;
     }
 
@@ -58,7 +58,7 @@ public class MultipleChoiceQuestion {
         this.gabarito = gabarito;
     }
 
-    public void setDisciplina(Discipline disciplina) {
+    public void setDisciplina(Object disciplina) {
         this.disciplina = disciplina;
     }
 

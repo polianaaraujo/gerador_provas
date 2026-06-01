@@ -1,16 +1,19 @@
 package src.model.entities;
 
 public class User {
-    private int codigo;
-    private String nome;
+    private int idUser;
+    private String name;
     private String email;
-    private String senha;
+    private String password;
     private UserRole role;
 
-    public int getCodigo() {
-        return codigo;
+    public int getIdUser() {
+        return idUser;
     }
-    
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -18,18 +21,18 @@ public class User {
         this.email = email;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
-    public void setNome(String nome){
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSenha(){
-        return senha;
+    public String getPassword() {
+        return password;
     }
-    public void setSenha(String senha){
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public UserRole getRole() {

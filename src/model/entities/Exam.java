@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Exam {
     private int codigo;
-    private Discipline disciplina;
+    private Object disciplina;
     private Question[] questoes = new Question[0];
     private LocalDate dataDeCriacao;
     private String semestre;
@@ -19,11 +19,11 @@ public class Exam {
         this.codigo = codigo;
     }
 
-    public Discipline getDisciplina() {
+    public Object getDisciplina() {
         return disciplina;
     }
 
-    public void setDisciplina(Discipline disciplina) {
+    public void setDisciplina(Object disciplina) {
         this.disciplina = disciplina;
     }
 
