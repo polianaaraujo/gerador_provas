@@ -9,6 +9,18 @@ public class Questao{
     private Usuario usuario;
     private Professor professor;
 
+
+    //construtor
+    public Questao(int codigo, String tipo, String enunciado, String gabarito, Disciplina disciplina, String assunto, int nivelDificuldade) {
+    setCodigo(codigo);
+    setTipo(tipo);
+    setEnunciado(enunciado);
+    setGabarito(gabarito);
+    setDisciplina(disciplina);
+    setAssunto(assunto);
+    setNivelDificuldade(nivelDificuldade);
+}
+
     //getters
     public int getCodigo() { return codigo; }
     public String getTipo() { return tipo; }
