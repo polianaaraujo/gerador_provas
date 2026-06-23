@@ -1,15 +1,27 @@
 package model.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Question {
     private int codigo;
-    private String tipo;
+    private QuestionType tipo; 
     private String enunciado;
     private String gabarito;
-    private Object disciplina;
+    private Object disciplina; 
     private String assunto;
     private int nivelDificuldade;
-    private User usuario;
     private Teacher professor;
+    private List<Alternative> alternativas = new ArrayList<>(); 
+
+    // Getters e Setters atualizados
+    public QuestionType getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(QuestionType tipo) {
+        this.tipo = tipo;
+    }
 
     public int getCodigo() {
         return codigo;
@@ -17,14 +29,6 @@ public class Question {
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public String getEnunciado() {
@@ -67,19 +71,17 @@ public class Question {
         this.nivelDificuldade = nivelDificuldade;
     }
 
-    public User getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(User usuario) {
-        this.usuario = usuario;
-    }
-
     public Teacher getProfessor() {
         return professor;
     }
 
     public void setProfessor(Teacher professor) {
         this.professor = professor;
+    }
+    public List<Alternative> getAlternativas() {
+        return alternativas;
+    }
+    public void setAlternativas(List<Alternative> alternativas) {
+        this.alternativas = alternativas;
     }
 }

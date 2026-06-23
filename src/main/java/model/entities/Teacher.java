@@ -1,15 +1,8 @@
 package model.entities;
 
 public class Teacher {
-    int id;
-    String resgistration_number;
-
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
+    private User user;
+    private String resgistration_number;
 
     public String getResgistration_number() {
         return resgistration_number;
@@ -17,6 +10,12 @@ public class Teacher {
 
     public void setResgistration_number(String resgistration_number) {
         this.resgistration_number = resgistration_number;
+    }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

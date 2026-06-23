@@ -1,12 +1,19 @@
 package model.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.DAO.QuestionDAO;
 import model.entities.Question;
 
 public class QuestionService {
-    private QuestionDAO questionDAO = new QuestionDAO();
+    private QuestionDAO questionDAO;
+    private AlternativeService alternativeService;
+
+    public QuestionService(QuestionDAO questionDAO, AlternativeService alternativeService) {
+        this.questionDAO = questionDAO;
+        this.alternativeService = alternativeService;
+    }
 
     public void cadastrar(Question question) {
         if (question.getEnunciado() == null || question.getEnunciado().isEmpty()) {
@@ -20,7 +27,7 @@ public class QuestionService {
         questionDAO.inserir(question);
     }
 
-    public ArrayList<Question> listar() {
+    public List<Question> listar() {
         return questionDAO.listar();
     }
 

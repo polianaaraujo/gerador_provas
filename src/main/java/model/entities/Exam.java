@@ -8,7 +8,6 @@ public class Exam {
     private Question[] questoes = new Question[0];
     private LocalDate dataDeCriacao;
     private String semestre;
-    private User usuario;
     private Teacher professor;
 
     public int getCodigo() {
@@ -49,14 +48,6 @@ public class Exam {
 
     public void setSemestre(String semestre) {
         this.semestre = semestre;
-    }
-
-    public User getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(User usuario) {
-        this.usuario = usuario;
     }
 
     public Teacher getProfessor() {

@@ -4,77 +4,106 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
+import model.entities.Alternative;
 import model.entities.Question;
+import model.entities.QuestionType;
 
 public class QuestionDAO {
 
-    public void inserir(Question question) {
-        String sql = "insert into question (tipo, enunciado, gabarito, assunto, nivel_dificuldade) values (?, ?, ?, ?, ?)";
+    private Connection conexao;
 
-        try {
-            Connection conexao = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+    public QuestionDAO(Connection conexao) {
+        this.conexao = conexao;
+    }
 
-            stmt.setString(1, question.getTipo());
+    public Question inserir(Question question) {
+        String sql = "INSERT INTO question (tipo, enunciado, gabarito, assunto, nivel_dificuldade) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, question.getTipo().name());
             stmt.setString(2, question.getEnunciado());
             stmt.setString(3, question.getGabarito());
             stmt.setString(4, question.getAssunto());
             stmt.setInt(5, question.getNivelDificuldade());
 
-            stmt.executeUpdate();
+            int linhasAfetadas = stmt.executeUpdate();
 
-            stmt.close();
-            conexao.close();
+            if (linhasAfetadas > 0) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        question.setCodigo(rs.getInt(1));
+                    }
+                }
+            }
+            return question;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao inserir questão no banco: " + e.getMessage(), e);
         }
     }
 
-    public ArrayList<Question> listar() {
-        String sql = "select * from question";
+    public List<Question> listar() {
+        String sql = "SELECT q.*, a.id AS alt_id, a.texto AS alt_texto, a.correta " +
+                     "FROM question q " +
+                     "LEFT JOIN alternativas a ON q.codigo = a.question_id";
 
-        ArrayList<Question> questions = new ArrayList<>();
+        Map<Integer, Question> mapQuestoes = new LinkedHashMap<>();
 
-        try {
-            Connection conexao = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conexao.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
+        try (PreparedStatement stmt = conexao.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Question question = new Question();
+                int codigoQuestao = rs.getInt("codigo");
+                Question question = mapQuestoes.get(codigoQuestao);
 
-                question.setCodigo(rs.getInt("codigo"));
-                question.setTipo(rs.getString("tipo"));
-                question.setEnunciado(rs.getString("enunciado"));
-                question.setGabarito(rs.getString("gabarito"));
-                question.setAssunto(rs.getString("assunto"));
-                question.setNivelDificuldade(rs.getInt("nivel_dificuldade"));
+                if (question == null) {
+                    question = new Question();
+                    question.setCodigo(codigoQuestao);
+                    
+                    String tipoDoBanco = rs.getString("tipo");
+                    if (tipoDoBanco != null) {
+                        question.setTipo(QuestionType.valueOf(tipoDoBanco));
+                    }
+                    
+                    question.setEnunciado(rs.getString("enunciado"));
+                    question.setGabarito(rs.getString("gabarito"));
+                    question.setAssunto(rs.getString("assunto"));
+                    question.setNivelDificuldade(rs.getInt("nivel_dificuldade"));
+                    
+                    mapQuestoes.put(codigoQuestao, question);
+                }
 
-                questions.add(question);
+                int idAlternativa = rs.getInt("alt_id");
+                if (idAlternativa > 0) {
+                    Alternative alt = new Alternative();
+                    alt.setId(idAlternativa);
+                    alt.setTexto(rs.getString("alt_texto"));
+                    alt.setCorreta(rs.getBoolean("correta"));
+                    
+                    question.getAlternativas().add(alt);
+                }
             }
 
-            rs.close();
-            stmt.close();
-            conexao.close();
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao listar questões: " + e.getMessage(), e);
         }
 
-        return questions;
+        // Converte os valores do Map de volta para uma List padrão
+        return new ArrayList<>(mapQuestoes.values());
     }
 
     public void atualizar(Question question) {
-        String sql = "update question set tipo = ?, enunciado = ?, gabarito = ?, assunto = ?, nivel_dificuldade = ? where codigo = ?";
+        String sql = "UPDATE question SET tipo = ?, enunciado = ?, gabarito = ?, assunto = ?, nivel_dificuldade = ? WHERE codigo = ?";
 
-        try {
-            Connection conexao = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            stmt.setString(1, question.getTipo());
+            stmt.setString(1, question.getTipo().name());
             stmt.setString(2, question.getEnunciado());
             stmt.setString(3, question.getGabarito());
             stmt.setString(4, question.getAssunto());
@@ -83,30 +112,21 @@ public class QuestionDAO {
 
             stmt.executeUpdate();
 
-            stmt.close();
-            conexao.close();
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao atualizar questão: " + e.getMessage(), e);
         }
     }
 
     public void excluir(int codigo) {
-        String sql = "delete from question where codigo = ?";
+        String sql = "DELETE FROM question WHERE codigo = ?";
 
-        try {
-            Connection conexao = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
             stmt.setInt(1, codigo);
-
             stmt.executeUpdate();
 
-            stmt.close();
-            conexao.close();
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao excluir questão: " + e.getMessage(), e);
         }
     }
 }
