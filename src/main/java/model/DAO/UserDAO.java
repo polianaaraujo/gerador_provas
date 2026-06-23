@@ -54,7 +54,7 @@ public class UserDAO {
 
             while (rs.next()) {
                 User user = new User();
-                user.setIdUser(rs.getInt("id_user")); 
+                user.setIdUser(rs.getInt("user_id"));
                 user.setName(rs.getString("name"));
                 user.setEmail(rs.getString("email"));
                 
@@ -74,7 +74,7 @@ public class UserDAO {
     }
 
     public void atualizar(User user) {
-        String sql = "UPDATE users SET name = ?, email = ?, password = ? WHERE id_user = ?";
+        String sql = "UPDATE users SET name = ?, email = ?, password = ? WHERE user_id = ?";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             
@@ -90,7 +90,7 @@ public class UserDAO {
     }
 
     public void deletar(int idUser) {
-        String sql = "DELETE FROM users WHERE id_user = ?";
+        String sql = "DELETE FROM users WHERE user_id = ?";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             
@@ -114,7 +114,7 @@ public class UserDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     user = new User();
-                    user.setIdUser(rs.getInt("id_user"));
+                    user.setIdUser(rs.getInt("user_id"));
                     user.setName(rs.getString("name"));
                     user.setEmail(rs.getString("email"));
                     user.setPassword(rs.getString("password"));

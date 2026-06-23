@@ -3,8 +3,10 @@ package model.entities;
 import java.time.LocalDate;
 
 public class Exam {
+
     private int codigo;
-    private Object disciplina;
+    private String titulo;
+    private Subject disciplina;
     private Question[] questoes = new Question[0];
     private LocalDate dataDeCriacao;
     private String semestre;
@@ -18,11 +20,19 @@ public class Exam {
         this.codigo = codigo;
     }
 
-    public Object getDisciplina() {
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public Subject getDisciplina() {
         return disciplina;
     }
 
-    public void setDisciplina(Object disciplina) {
+    public void setDisciplina(Subject disciplina) {
         this.disciplina = disciplina;
     }
 
@@ -59,6 +69,7 @@ public class Exam {
     }
 
     public void addQuestao(Question questao) {
+
         Question[] questoesAtualizadas = new Question[questoes.length + 1];
 
         for (int i = 0; i < questoes.length; i++) {
@@ -71,20 +82,24 @@ public class Exam {
     }
 
     public void removerQuestao(Question questao) {
+
         int posicao = -1;
 
         for (int i = 0; i < questoes.length; i++) {
             if (questoes[i] == questao) {
                 posicao = i;
+                break;
             }
         }
 
         if (posicao != -1) {
+
             Question[] questoesAtualizadas = new Question[questoes.length - 1];
 
             int j = 0;
 
             for (int i = 0; i < questoes.length; i++) {
+
                 if (i != posicao) {
                     questoesAtualizadas[j] = questoes[i];
                     j++;
