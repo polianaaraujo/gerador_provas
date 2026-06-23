@@ -1,40 +1,37 @@
-/* =========================================
-   ESTILOS DO HEADER (CABEÇALHO)
-   ========================================= */
+/* Estilos do header */
 
-/* Contêiner principal (O HBox) */
 .header-container {
-    -fx-background-color: #ffffff; /* Fundo branco para destacar do resto do sistema */
-    -fx-border-color: transparent transparent #e5e7eb transparent; /* Cria uma linha sutil apenas na parte inferior */
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #e5e7eb transparent; 
     -fx-border-width: 1px;
-    -fx-padding: 15px 30px; /* Dá um respiro excelente: 15px em cima/baixo e 30px nas laterais */
-    -fx-alignment: center-left; /* Alinha o conteúdo verticalmente ao centro */
+    -fx-padding: 10px 15px;
+    -fx-alignment: center-left;
+    -fx-spacing: 10px;
     
 }
 
-/* Texto do Título ("Gerador de Provas") */
 .header-titulo {
-    font-family: "Segoe UI", Helvetica, Arial, sans-serif; /* Silencia o aviso do VS Code */
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-text-fill: #1a56db; /* O tom de azul vibrante */
+    -fx-text-fill: #1a56db;
     -fx-font-size: 26px;
-    -fx-font-weight: 800; /* Deixa a fonte bem grossa e destacada */
+    -fx-font-weight: 800;
 }
 
 /* Botão de Sair (Logout) */
 .btn-sair {
-    -fx-background-color: transparent; /* Fundo transparente para não pesar o visual */
-    -fx-border-color: #d1d5db; /* Borda cinza clara */
-    -fx-border-radius: 8px; /* Cantos arredondados */
-    -fx-padding: 8px 16px;
-    -fx-text-fill: #4b5563; /* Texto cinza escuro */
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand; /* Transforma o mouse em uma "mãozinha" */
+    -fx-background-color: transparent; 
+    -fx-border-color: #1a56db; 
+    -fx-border-radius: 8px;
+    -fx-padding: 8px 8px;
+    -fx-cursor: hand;
 }
 
-/* Efeito Hover (Quando passa o mouse no botão de sair) */
 .btn-sair:hover {
-    -fx-background-color: #f3f4f6; /* Fica levemente cinza ao fundo */
-    -fx-text-fill: #111827; /* O texto fica um pouco mais escuro */
+    -fx-background-color: #f3f4f6; 
+}
+
+.icon
+{
+    -fx-background-color: #1a56db;
+    -fx-background-radius: 8px;
 }
