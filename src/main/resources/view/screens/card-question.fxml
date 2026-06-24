@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="12.0" styleClass="cartao-questao" stylesheets="@../styles/question.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+        <Insets bottom="16.0" left="20.0" right="20.0" top="16.0" />
+    </padding>
+    <children>
+
+        <HBox alignment="CENTER_LEFT" spacing="8.0">
+            <children>
+                <Label styleClass="badge-padrao" text="RF-001" />
+                <Label styleClass="badge-medio" text="MÉDIO" />
+                <Label styleClass="badge-padrao" text="Múltipla Escolha" />
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Button fx:id="btnEditarQuestao" mnemonicParsing="false" styleClass="btn-acao-card" stylesheets="@../styles/exam.css">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/olho.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnExcluirQuestao" mnemonicParsing="false" styleClass="btn-acao-card" stylesheets="@../styles/exam.css">
+                    <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/lixo.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+        </HBox>
+
+        <Label styleClass="txt-caminho" text="Redes Futuristas &gt; Redes Quânticas" />
+
+        <Label styleClass="txt-enunciado" text="O que é computação quântica no contexto de redes?" wrapText="true" />
+
+        <VBox spacing="6.0">
+            <children>
+                <Label styleClass="txt-opcao" text="A) Uso de bits quânticos para transmissão de dados com segurança absoluta" wrapText="true" />
+                <Label styleClass="txt-opcao" text="B) Redes que funcionam apenas em temperatura ambiente" wrapText="true" />
+                <Label styleClass="txt-opcao" text="C) Conexões sem fio de alta velocidade" wrapText="true" />
+                <Label styleClass="txt-opcao" text="D) Protocolo de internet versão 7" wrapText="true" />
+            </children>
+            <VBox.margin>
+                <Insets bottom="5.0" top="5.0" />
+            </VBox.margin>
+        </VBox>
+
+        <Label styleClass="txt-gabarito" text="Gabarito: A" />
+
+    </children>
+</VBox>

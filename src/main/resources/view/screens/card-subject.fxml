@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="190.0" prefWidth="220.0" styleClass="cartao-disciplina" stylesheets="@../styles/subject.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+    </padding>
+    <children>
+
+        <HBox alignment="TOP_LEFT" spacing="10.0">
+            <children>
+                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="36.0" prefWidth="36.0" styleClass="fundo-icone-livro" stylesheets="@../styles/subject.css">
+                    <children>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/livro.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </StackPane>
+
+                <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="txt-titulo-disciplina" stylesheets="@../styles/subject.css" text="Redes Futuristas" wrapText="true" />
+                        <Label styleClass="txt-codigo" stylesheets="@../styles/subject.css" text="Código: RF001" />
+                    </children>
+                </VBox>
+
+                <VBox alignment="TOP_RIGHT" spacing="4.0">
+                    <children>
+                        <Button fx:id="btnEditar" mnemonicParsing="false" styleClass="btn-acao-card" stylesheets="@../styles/exam.css">
+                            <graphic>
+                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../icons/olho.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <padding>
+                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                            </padding>
+                        </Button>
+                        <Button fx:id="btnExcluir" mnemonicParsing="false" styleClass="btn-acao-card" stylesheets="@../styles/exam.css">
+                            <graphic>
+                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../icons/lixo.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <padding>
+                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                            </padding>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+
+        <Region VBox.vgrow="ALWAYS" />
+
+        <VBox spacing="8.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="6.0">
+                    <children>
+                        <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/tag.png" />
+                            </image>
+                        </ImageView>
+                        <Label styleClass="txt-subtitulo-assuntos" stylesheets="@../styles/subject.css" text="Assuntos (5)" />
+                    </children>
+                </HBox>
+
+                <FlowPane hgap="6.0" stylesheets="@../styles/subject.css" vgap="6.0">
+                    <children>
+                        <Label styleClass="tag-assunto" text="Redes Quânticas" />
+                        <Label styleClass="tag-assunto" text="IoT Avançado" />
+                        <Label styleClass="tag-assunto" text="Blockchain" />
+                    </children>
+                </FlowPane>
+            </children>
+        </VBox>
+    </children>
+</VBox>

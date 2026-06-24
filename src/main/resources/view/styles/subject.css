@@ -1,0 +1,129 @@
+.cartao-disciplina {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+}
+
+.fundo-icone-livro {
+    -fx-background-color: #eef2ff;
+    -fx-background-radius: 8px;
+}
+
+.txt-titulo-disciplina {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.txt-codigo {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-size: 12px;
+    -fx-text-fill: #94a3b8;
+}
+
+.txt-subtitulo-assuntos {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #64748b;
+}
+
+/* Pílulas/Tags dos Assuntos na Visão Geral */
+.tag-assunto {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #cbd5e1;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+    -fx-padding: 3px 8px;
+}
+
+.tag-assunto-mais {
+    -fx-background-color: #f1f5f9;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #475569;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 6px;
+}
+
+/* Modal - Edit Subject */
+
+.fundo-modal {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 16px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+.titulo-modal {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
+}
+
+.input-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #475569;
+}
+
+.input-field {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px;
+}
+
+.input-field:focused {
+    -fx-border-color: #2563eb;
+    -fx-background-color: #ffffff;
+}
+
+/* Botões do Modal */
+.btn-primary {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+.btn-primary:hover { -fx-background-color: #1d4ed8; }
+
+.btn-secondary {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e2e8f0;
+    -fx-text-fill: #64748b;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8px;      /* Arredonda a borda externa */
+    -fx-background-radius: 8px;  /* CORREÇÃO: Arredonda o fundo interno igual ao Salvar */
+    -fx-cursor: hand;
+}
+.btn-secondary:hover {
+    -fx-background-color: #f8fafc;
+}
+
+/* Tags internas do Modal */
+.tag-container {
+    -fx-background-color: #f1f5f9;
+    -fx-background-radius: 6px;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 6px;
+    -fx-padding: 4px 8px;
+}
+
+.btn-remove-tag {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 0 0 0 5;
+}

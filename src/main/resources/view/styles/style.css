@@ -71,3 +71,24 @@
 .botao-secundario:hover {
     -fx-background-color: #eff6ff;
 }
+
+.card-dashboard {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-padding: 20px;
+}
+
+.card-acao {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-padding: 20px;
+    -fx-cursor: hand;
+}
+
+.card-acao:hover {
+    -fx-background-color: #f9fafb;
+}

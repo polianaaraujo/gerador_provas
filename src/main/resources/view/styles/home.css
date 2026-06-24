@@ -1,0 +1,56 @@
+/* home.css (Atualizado e Padronizado) */
+
+.titulo-pagina {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000; /* Padronizado com exam.css */
+}
+
+.subtitulo-pagina {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #64748b; /* Padronizado com exam.css */
+}
+
+.card-dashboard {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-border-color: #e2e8f0; /* Alinhado com as bordas do cartao-prova */
+    -fx-padding: 18px;
+    -fx-spacing: 8px;
+}
+
+.card-dashboard:hover {
+    -fx-border-color: #cbd5e1; /* Efeito suave no hover */
+}
+
+.card-titulo {
+    -fx-font-size: 15px;
+    -fx-text-fill: #64748b;
+}
+
+.card-numero {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.card-acao-home {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-border-color: #e2e8f0;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+    -fx-alignment: center-left;
+    -fx-padding: 18px;
+    -fx-cursor: hand;
+}
+
+.card-acao-home:hover {
+    -fx-background-color: #f1f5f9; /* Fundo cinza claro padrão do sistema */
+    -fx-border-color: #2563eb; /* Azul padrão do sistema no hover */
+}
