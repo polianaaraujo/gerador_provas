@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefWidth="500.0" spacing="16.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 4);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <padding>
+      <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+   </padding>
+   <children>
+      
+      <HBox alignment="CENTER_LEFT">
+         <children>
+            <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #111827;" text="Substituir Questão" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #6B7280; -fx-font-size: 14px; -fx-cursor: hand;" text="X" />
+         </children>
+      </HBox>
+
+      <Label style="-fx-font-size: 14px;" text="Selecione uma nova questão para substituir a atual" textFill="#6b7280" wrapText="true">
+         <VBox.margin>
+            <Insets top="-8.0" />
+         </VBox.margin>
+      </Label>
+
+      <VBox spacing="8.0">
+         <children>
+            <Label style="-fx-text-fill: #111827; -fx-font-size: 14px; -fx-font-weight: bold;" text="Nova Questão" />
+            <ComboBox maxWidth="1.7976931348623157E308" promptText="Selecione" style="-fx-background-color: #F3F4F6; -fx-background-radius: 6; -fx-border-color: transparent; -fx-padding: 4px; -fx-font-size: 14px; -fx-cursor: hand;" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="16.0" top="8.0" />
+         </VBox.margin>
+      </VBox>
+
+      <HBox alignment="CENTER_RIGHT" spacing="12.0">
+         <children>
+            <Button mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: #D1D5DB; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 8px 16px; -fx-text-fill: #111827; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand;" text="Cancelar" />
+            <Button mnemonicParsing="false" style="-fx-background-color: #1D4ED8; -fx-background-radius: 6; -fx-padding: 8px 16px; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand;" text="Substituir" />
+         </children>
+      </HBox>
+
+   </children>
+</VBox>
