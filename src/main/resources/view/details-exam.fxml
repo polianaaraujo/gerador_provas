@@ -3,8 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -12,139 +11,76 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="550.0" spacing="20.0" styleClass="modal-root" stylesheets="@../styles/exam.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      
-      <!-- CABEÇALHO: Título e Botão Fechar -->
-      <HBox alignment="CENTER_LEFT">
-         <children>
-            <Label fx:id="lblNomeProva" styleClass="titulo-filtro" text="Prova Teste" />
-            <!-- A Mola que empurra o botão de fechar para a direita -->
-            <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="btnFechar" mnemonicParsing="false" styleClass="btn-acao-card" text="✕" />
-         </children>
-      </HBox>
+<VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="550.0" spacing="20.0" styleClass="modal-root" stylesheets="@../styles/exam.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presenter.controllers.DetailsExamController">
+    <padding>
+        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+    </padding>
+    <children>
 
-      <!-- CARD DE INFORMAÇÕES (Fundo cinza claro) -->
-      <VBox styleClass="label-form">
-         <children>
-            <GridPane hgap="40.0" vgap="25.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  
-                  <!-- Linha 1, Coluna 0 (Disciplina) -->
-                  <VBox spacing="2.0">
-                     <children>
-                        <Label style="-fx-font-weight: bold;" styleClass="info-label" text="Disciplina" />
-                        <Label fx:id="lblDisciplina" styleClass="label-form" text="Redes Futuristas" />
-                     </children>
-                  </VBox>
-                  
-                  <!-- Linha 1, Coluna 1 (Semestre) -->
-                  <VBox spacing="2.0" GridPane.columnIndex="1">
-                     <children>
-                        <Label style="-fx-font-weight: bold;" styleClass="info-label" text="Semestre" />
-                        <Label fx:id="lblSemestre" styleClass="info-value" text="2026.1" />
-                     </children>
-                  </VBox>
+        <HBox alignment="CENTER_LEFT">
+            <children>
+                <Label fx:id="lblNomeProva" styleClass="titulo-filtro" text="Detalhes da Prova" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button fx:id="btnFechar" mnemonicParsing="false" styleClass="btn-acao-card" text="✕" />
+            </children>
+        </HBox>
 
-                  <!-- Linha 2, Coluna 0 (Data) -->
-                  <VBox spacing="2.0" GridPane.rowIndex="1">
-                     <children>
-                        <Label style="-fx-font-weight: bold;" styleClass="info-label" text="Data de Criação" />
-                        <Label fx:id="lblDataCriacao" styleClass="info-value" text="29/03/2026" />
-                     </children>
-                  </VBox>
+        <VBox styleClass="caixa-filtros" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+            <children>
+                <GridPane hgap="40.0" vgap="20.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
 
-                  <!-- Linha 2, Coluna 1 (Total de Questões) -->
-                  <VBox spacing="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <children>
-                        <Label style="-fx-font-weight: bold;" styleClass="info-label" text="Total de Questões" />
-                        <Label fx:id="lblTotalQuestoes" styleClass="info-value" text="5" />
-                     </children>
-                  </VBox>
+                        <VBox spacing="2.0">
+                            <children>
+                                <Label style="-fx-font-weight: bold; -fx-text-fill: #64748b; -fx-font-size: 12px;" text="Disciplina" />
+                                <Label fx:id="lblDisciplina" styleClass="label-form" text="--" />
+                            </children>
+                        </VBox>
 
-               </children>
-            </GridPane>
-         </children>
-         <padding>
-            <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
-         </padding>
-      </VBox>
+                        <VBox spacing="2.0" GridPane.columnIndex="1">
+                            <children>
+                                <Label style="-fx-font-weight: bold; -fx-text-fill: #64748b; -fx-font-size: 12px;" text="Semestre" />
+                                <Label fx:id="lblSemestre" styleClass="label-form" text="--" />
+                            </children>
+                        </VBox>
 
-      <!-- TÍTULO DA SEÇÃO INFERIOR -->
-      <VBox>
-         <children>
-            <Label styleClass="section-title" text="Questões da Prova" />
-         </children>
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </VBox>
-      
-     <VBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="12.0" styleClass="cartao-questao" stylesheets="@../styles/question.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+                        <VBox spacing="2.0" GridPane.rowIndex="1">
+                            <children>
+                                <Label style="-fx-font-weight: bold; -fx-text-fill: #64748b; -fx-font-size: 12px;" text="Data de Criação" />
+                                <Label fx:id="lblDataCriacao" styleClass="label-form" text="--/--/----" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <children>
+                                <Label style="-fx-font-weight: bold; -fx-text-fill: #64748b; -fx-font-size: 12px;" text="Total de Questões" />
+                                <Label fx:id="lblTotalQuestoes" styleClass="label-form" text="0" />
+                            </children>
+                        </VBox>
+
+                    </children>
+                </GridPane>
+            </children>
             <padding>
                 <Insets bottom="16.0" left="20.0" right="20.0" top="16.0" />
             </padding>
-            <children>
-
-                <HBox alignment="CENTER_LEFT" spacing="8.0">
-                    <children>
-                        <Label styleClass="badge-padrao" text="RF-001" />
-                        <Label styleClass="badge-medio" text="MÉDIO" />
-                        <Label styleClass="badge-padrao" text="Múltipla Escolha" />
-
-                        <Region HBox.hgrow="ALWAYS" />
-
-                        <Button fx:id="btnEditarQuestao" mnemonicParsing="false" styleClass="btn-acao-card" stylesheets="@../styles/exam.css">
-                            <graphic>
-                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-acao-card">
-                                    <image>
-                              <Image url="@../icons/refrescar.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                        <Button fx:id="btnExcluirQuestao" mnemonicParsing="false" styleClass="btn-acao-card" stylesheets="@../styles/exam.css">
-                            <graphic>
-                                <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="btn-acao-card">
-                                    <image>
-                                        <Image url="@../icons/lixo.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                    </children>
-                </HBox>
-
-                <Label styleClass="txt-caminho" text="Redes Futuristas &gt; Redes Quânticas" />
-
-                <Label styleClass="txt-enunciado" text="O que é computação quântica no contexto de redes?" wrapText="true" />
-
-                <VBox spacing="6.0">
-                    <children>
-                        <Label styleClass="txt-opcao" text="A) Uso de bits quânticos para transmissão de dados com segurança absoluta" wrapText="true" />
-                        <Label styleClass="txt-opcao" text="B) Redes que funcionam apenas em temperatura ambiente" wrapText="true" />
-                        <Label styleClass="txt-opcao" text="C) Conexões sem fio de alta velocidade" wrapText="true" />
-                        <Label styleClass="txt-opcao" text="D) Protocolo de internet versão 7" wrapText="true" />
-                    </children>
-                    <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                    </VBox.margin>
-                </VBox>
-
-            </children>
         </VBox>
 
-   </children>
-   <padding>
-      <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-   </padding>
+        <Label styleClass="section-title" text="Questões da Prova" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1e293b;" />
+
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+            <content>
+                <VBox fx:id="vboxQuestoesProva" spacing="12.0" style="-fx-background-color: transparent;" />
+            </content>
+        </ScrollPane>
+
+    </children>
 </VBox>

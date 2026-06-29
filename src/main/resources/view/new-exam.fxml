@@ -10,115 +10,113 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="700.0" styleClass="container" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
-   
-   <top>
-       <fx:include source="header.fxml" /> 
-   </top>
-   
-   <left>
-       <VBox>
-           <BorderPane.margin>
-               <Insets left="15.0" top="20.0" />
-           </BorderPane.margin>
-           <fx:include source="sidebar.fxml" />
-       </VBox>
-   </left>
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <VBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="438.0">
-               <children>
-                  <Label styleClass="titulo-pagina" stylesheets="@../styles/exam.css" text="Gerar prova">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <Label styleClass="subtitulo-pagina" stylesheets="@../styles/exam.css" text="Crie provas com questões aleatórias baseadas nos critérios definidos" />
-               </children>
-               <VBox.margin>
-                  <Insets left="1.0" />
-               </VBox.margin>
-            </VBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
-               <children>
-                  
-                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="260.0" spacing="15.0" stylesheets="@../styles/exam.css">
-                     <children>
-                        <Label styleClass="label-form" stylesheets="@../styles/exam.css" text="Informações da Prova" />
-                        
-                              <VBox spacing="5.0">
-                           <Label styleClass="label-form" text="Disciplina" />
-                           <ComboBox maxWidth="1.7976931348623157E308" promptText="Selecione uma disciplina" styleClass="menu-btn" />
-                        </VBox>
-                        
-                              <VBox spacing="5.0">
-                           <Label styleClass="label-form" text="Título da Prova " />
-                           <TextField promptText="Ex: Prova 1 - Redes Futuristas" styleClass="input-filtro" />
-                        </VBox>
-                        
-                              <VBox spacing="5.0">
-                           <Label styleClass="label-form" text="Semestre" />
-                           <TextField promptText="2026.1" styleClass="input-filtro" />
-                        </VBox>
-                        
-                              <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="257.0">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </VBox.margin>
-                           <children>
-                              <Label styleClass="label-form" text="Total de Questões:" />
-                              <Label styleClass="label-form" text="10" />
-                           </children>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                     <styleClass>
-                        <String fx:value="caixa-branca" />
-                        <String fx:value="caixa-filtros" />
-                     </styleClass>
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </VBox>
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="700.0" styleClass="container" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presenter.controllers.NewExamController">
+    <top>
+        <fx:include source="header.fxml" />
+    </top>
 
-                        <VBox prefHeight="290.0" prefWidth="260.0" spacing="15.0" styleClass="caixa-filtros" stylesheets="@../styles/exam.css">
-                     <children>
-                        <Label styleClass="label-form" text="Distribuição de Questões" />
-                        
-                              <VBox spacing="5.0">
-                           <Label styleClass="label-form" text="Questões Fáceis" />
-                           <TextField styleClass="input-filtro" text="4" />
+    <left>
+        <VBox>
+            <BorderPane.margin>
+                <Insets left="15.0" top="20.0" />
+            </BorderPane.margin>
+            <fx:include source="sidebar.fxml" />
+        </VBox>
+    </left>
+    <center>
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <VBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="438.0">
+                    <children>
+                        <Label styleClass="titulo-pagina" stylesheets="@../styles/exam.css" text="Gerar prova">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Label>
+                        <Label styleClass="subtitulo-pagina" stylesheets="@../styles/exam.css" text="Crie provas com questões aleatórias baseadas nos critérios definidos" />
+                    </children>
+                    <VBox.margin>
+                        <Insets left="1.0" />
+                    </VBox.margin>
+                </VBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+                    <children>
+
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="260.0" spacing="12.0" stylesheets="@../styles/exam.css">
+                            <children>
+                                <Label styleClass="label-form" stylesheets="@../styles/exam.css" text="Informações da Prova" />
+
+                                <VBox spacing="5.0">
+                                    <Label styleClass="label-form" text="Disciplina" />
+                                    <ComboBox fx:id="cbDisciplina" maxWidth="1.7976931348623157E308" promptText="Selecione uma disciplina" styleClass="menu-btn" />
+                                </VBox>
+
+                                <VBox spacing="5.0">
+                                    <Label styleClass="label-form" text="Título da Prova " />
+                                    <TextField fx:id="txtTitulo" promptText="Ex: Prova 1 - POO" styleClass="input-filtro" />
+                                </VBox>
+
+                                <VBox spacing="5.0">
+                                    <Label styleClass="label-form" text="Semestre" />
+                                    <ComboBox fx:id="cbSemestre" maxWidth="1.7976931348623157E308" promptText="Selecione o semestre" styleClass="menu-btn" />
+                                </VBox>
+
+                                <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="257.0">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" top="5.0" />
+                                    </VBox.margin>
+                                    <children>
+                                        <Label styleClass="label-form" text="Total de Questões: " />
+                                        <Label fx:id="lblTotalQuestoes" styleClass="label-form" text="--" />
+                                    </children>
+                                </HBox>
+                            </children>
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <styleClass>
+                                <String fx:value="caixa-branca" />
+                                <String fx:value="caixa-filtros" />
+                            </styleClass>
+                            <HBox.margin>
+                                <Insets top="10.0" />
+                            </HBox.margin>
                         </VBox>
-                        
-                              <VBox spacing="5.0">
-                           <Label styleClass="label-form" text="Questões Médias" />
-                           <TextField styleClass="input-filtro" text="4" />
+
+                        <VBox prefHeight="310.0" prefWidth="260.0" spacing="12.0" styleClass="caixa-filtros" stylesheets="@../styles/exam.css">
+                            <children>
+                                <Label styleClass="label-form" text="Distribuição de Questões" />
+
+                                <VBox spacing="5.0">
+                                    <Label styleClass="label-form" text="Questões Fáceis" />
+                                    <TextField fx:id="txtQtdFacil" styleClass="input-filtro" promptText="0" />
+                                </VBox>
+
+                                <VBox spacing="5.0">
+                                    <Label styleClass="label-form" text="Questões Médias" />
+                                    <TextField fx:id="txtQtdMedio" styleClass="input-filtro" promptText="0" />
+                                </VBox>
+
+                                <VBox spacing="5.0">
+                                    <Label styleClass="label-form" text="Questões Difíceis" />
+                                    <TextField fx:id="txtQtdDificil" styleClass="input-filtro" promptText="0" />
+                                </VBox>
+
+                                <Button fx:id="btnGerarProva" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="btn-acao" text="Gerar Prova" />
+                            </children>
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <HBox.margin>
+                                <Insets top="10.0" />
+                            </HBox.margin>
                         </VBox>
-                        
-                              <VBox spacing="5.0">
-                           <Label styleClass="label-form" text="Questões Difíceis" />
-                           <TextField styleClass="input-filtro" text="2" />
-                        </VBox>
-                        
-                                          <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="btn-acao" text="Gerar Prova" />
-                     </children>
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </VBox>
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets right="20.0" top="15.0" />
-         </padding>
-      </VBox>
-   </center>
-   
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets right="20.0" top="15.0" />
+            </padding>
+        </VBox>
+    </center>
 </BorderPane>
