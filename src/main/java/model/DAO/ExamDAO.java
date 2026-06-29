@@ -68,43 +68,100 @@ public class ExamDAO {
     }
 
     public List<Exam> findAll() {
-        String sql = "SELECT * FROM exams";
-        List<Exam> exams = new ArrayList<>();
+        List<Exam> list = new ArrayList<>();
+        String sql = "SELECT e.*, s.name as subject_name FROM exams e INNER JOIN subjects s ON e.subject_id = s.id_subject";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
+            // Instancia o QuestionDAO para buscar as questões de cada prova
+            QuestionDAO questionDAO = new QuestionDAO();
+
             while (rs.next()) {
-                exams.add(instantiateExam(rs));
+                Exam exam = new Exam();
+                exam.setExamId(rs.getInt("exam_id"));
+
+                // ==========================================
+                // Lendo o semestre direto da coluna
+                exam.setSemester(rs.getString("semester"));
+
+                // Lendo a data de criação e convertendo de SQL Date para LocalDate
+                if (rs.getDate("creation_date") != null) {
+                    exam.setCreationDate(rs.getDate("creation_date").toLocalDate());
+                }
+
+                Subject subject = new Subject();
+                subject.setIdSubject(rs.getInt("subject_id"));
+                subject.setName(rs.getString("subject_name"));
+                exam.setSubject(subject);
+
+                // Busca as questões no banco e salva na lista do Exam
+                List<Question> questoesDaProva = questionDAO.findByExam(exam.getExamId());
+                exam.setQuestions(questoesDaProva);
+
+                list.add(exam);
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao listar provas: " + e.getMessage(), e);
+            throw new RuntimeException("Erro ao buscar provas: " + e.getMessage(), e);
         }
 
-        return exams;
+        return list;
     }
 
     public Exam findById(int id) {
-        String sql = "SELECT * FROM exams WHERE exam_id = ?";
-        
+        // e.* traz TUDO de exams (exam_id, creation_date, semester, subject_id, teacher_id)
+        // s.name e s.code trazem os extras da tabela subjects
+        String sql = "SELECT e.*, s.name as subject_name, s.code as subject_code " +
+                "FROM exams e " +
+                "INNER JOIN subjects s ON e.subject_id = s.id_subject " +
+                "WHERE e.exam_id = ?";
+
+        Exam exam = null;
+
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+
             stmt.setInt(1, id);
-            
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return instantiateExam(rs);
+                    exam = new Exam();
+
+                    // 1. Mapeando TODOS os campos da tabela 'exams'
+                    exam.setExamId(rs.getInt("exam_id"));
+                    exam.setSemester(rs.getString("semester"));
+
+                    if (rs.getDate("creation_date") != null) {
+                        exam.setCreationDate(rs.getDate("creation_date").toLocalDate());
+                    }
+
+                    // Criando o professor e setando apenas o ID (já que ele está na tabela exams)
+                    User user = new User();
+                    Teacher teacher = new Teacher();
+                    user.setIdUser(rs.getInt("teacher_id"));
+                    teacher.setUser(user);
+                    exam.setTeacher(teacher);
+
+                    // 2. Mapeando a tabela 'subjects' a partir do INNER JOIN
+                    Subject subject = new Subject();
+                    subject.setIdSubject(rs.getInt("subject_id"));
+                    subject.setName(rs.getString("subject_name"));
+                    subject.setCode(rs.getString("subject_code"));
+
+                    exam.setSubject(subject);
+
+                    // 3. Buscando a lista de questões vinculadas a esta prova
+                    QuestionDAO questionDAO = new QuestionDAO();
+                    exam.setQuestions(questionDAO.findByExam(exam.getExamId()));
                 }
             }
-            
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar a prova por ID: " + e.getMessage(), e);
+            throw new RuntimeException("Erro ao buscar prova por ID: " + e.getMessage(), e);
         }
-        
-        return null;
+
+        return exam;
     }
 
     public List<Exam> findBySemester(String semester) {

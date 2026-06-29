@@ -14,9 +14,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import model.DAO.TeacherDAO;
 import model.DAO.UserDAO;
+// Importe o AdminDAO e AdminService se já existirem no seu projeto
+// import model.DAO.AdminDAO;
+// import model.services.AdminService;
 import model.entities.Teacher;
 import model.entities.User;
 import model.entities.UserRole;
+// import model.entities.Admin;
 import model.services.TeacherService;
 import model.services.UserService;
 import presenter.utils.SessionManager;
@@ -30,6 +34,7 @@ public class UserController implements Initializable {
 
     @FXML private StackPane rootStackPane;
     @FXML private VBox vboxUsersList;
+
     @FXML private Button btnCreateUser;
 
     @FXML private VBox modalUserForm;
@@ -51,6 +56,7 @@ public class UserController implements Initializable {
     public UserController() {
         this.userService = new UserService(new UserDAO());
         this.teacherService = new TeacherService(new TeacherDAO(), userService);
+        // this.adminService = new AdminService(new AdminDAO(), userService); // Descomente quando for usar
     }
 
     @Override
@@ -251,7 +257,6 @@ public class UserController implements Initializable {
                 showAlert(Alert.AlertType.INFORMATION, "Sucesso", "Usuário criado com sucesso!");
 
             } else {
-                // ==================== ROTINA DE ATUALIZAÇÃO ====================
                 currentEditingUser.setName(name);
                 currentEditingUser.setEmail(email);
 
@@ -259,19 +264,15 @@ public class UserController implements Initializable {
                     currentEditingUser.setPassword(password);
                 }
 
-                // Atualiza a tabela User
                 userService.update(currentEditingUser);
 
-                // Atualiza a tabela Teacher, se for o caso
                 if (roleEnum == UserRole.TEACHER) {
-                    // CORREÇÃO: Usar findByUserId em vez de findById
                     Teacher teacher = teacherService.findById(currentEditingUser.getIdUser());
 
                     if (teacher != null) {
                         teacher.setRegistration_number(registrationNumber);
                         teacherService.update(teacher);
                     } else {
-                        // Opcional: Se por algum bug o professor não existia na tabela de professores, ele cria agora
                         Teacher newTeacher = new Teacher(currentEditingUser, registrationNumber);
                         teacherService.insert(newTeacher);
                     }
@@ -283,9 +284,7 @@ public class UserController implements Initializable {
             loadUsers();
 
         } catch (Exception e) {
-            // ISSO SALVA VIDAS: Imprime o erro completo no console do IntelliJ
             e.printStackTrace();
-
             showAlert(Alert.AlertType.ERROR, "Erro ao salvar usuário", e.getMessage());
         }
     }

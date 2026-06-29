@@ -41,7 +41,7 @@
                         </children>
                      </VBox>
                      <Region maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                     <Button mnemonicParsing="false" onAction="#handleOpenCreateModal" styleClass="btn-acao" stylesheets="@../styles/exam.css" text="Novo usuário" />
+                     <Button fx:id="btnCreateUser" mnemonicParsing="false" onAction="#handleOpenCreateModal" styleClass="btn-acao" stylesheets="@../styles/exam.css" text="Novo usuário" />
                   </children>
                   <padding>
                      <Insets bottom="12.0" />

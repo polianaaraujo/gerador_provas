@@ -35,28 +35,34 @@ public class NewExamController {
 
     @FXML
     public void initialize() {
+        // 1. Inicializa os serviços primeiro
         this.questionDAO = new QuestionDAO();
         this.examService = new ExamService(new ExamDAO(), this.questionDAO);
         this.subjectService = new SubjectService(new SubjectDAO());
 
+        // 2. Configura as strings estáticas do semestre
         cbSemestre.setItems(FXCollections.observableArrayList("2026.1", "2026.2", "2025.1", "2025.2"));
 
-        try {
-            cbDisciplina.setItems(FXCollections.observableArrayList(subjectService.findAll()));
-        } catch (Exception e) {
-            System.err.println("Erro ao listar disciplinas: " + e.getMessage());
-        }
-
-        cbDisciplina.setCellFactory(p -> new ListCell<>() {
+        // 3. Configura a renderização visual do ComboBox (Como a disciplina será mostrada)
+        cbDisciplina.setCellFactory(p -> new ListCell<Subject>() {
             @Override
             protected void updateItem(Subject item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(empty || item == null ? null : item.getName());
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getName()); // Garante a exibição do nome da disciplina
+                }
             }
         });
+
+        // Aplica o comportamento para o elemento selecionado no botão do ComboBox
         cbDisciplina.setButtonCell(cbDisciplina.getCellFactory().call(null));
 
-        // Listener dinâmico para somar o total de questões automaticamente na interface
+        // 4. Carrega os dados vindos do banco de dados de forma segura
+        carregarDisciplinas();
+
+        // 5. Listener dinâmico para somar o total de questões automaticamente na interface
         javafx.beans.value.ChangeListener<String> somaTotalListener = (obs, antigo, novo) -> {
             int total = lerQuantidade(txtQtdFacil) + lerQuantidade(txtQtdMedio) + lerQuantidade(txtQtdDificil);
             lblTotalQuestoes.setText(String.valueOf(total));
@@ -66,6 +72,20 @@ public class NewExamController {
         txtQtdDificil.textProperty().addListener(somaTotalListener);
 
         btnGerarProva.setOnAction(e -> gerarProvaAutomatica());
+    }
+
+    private void carregarDisciplinas() {
+        try {
+            List<Subject> disciplinas = subjectService.findAll();
+            if (disciplinas != null && !disciplinas.isEmpty()) {
+                cbDisciplina.setItems(FXCollections.observableArrayList(disciplinas));
+            } else {
+                System.out.println("Aviso: Nenhuma disciplina encontrada no banco de dados.");
+            }
+        } catch (Exception e) {
+            System.err.println("Erro crítico ao listar disciplinas do banco: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void gerarProvaAutomatica() {

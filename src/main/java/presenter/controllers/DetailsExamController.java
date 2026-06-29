@@ -36,15 +36,18 @@ public class DetailsExamController {
         });
     }
 
-    /**
-     * Injeta a prova selecionada, preenche os cabeçalhos e gera as questões reais na tela.
-     */
     public void inicializarDados(Exam exam) {
         if (exam == null) return;
 
         // 1. Preenche os metadados básicos do cabeçalho do Modal
         lblNomeProva.setText("Prova #" + exam.getExamId());
-        lblDisciplina.setText(exam.getSubject() != null ? exam.getSubject().getName() : "Geral");
+
+        // PROTEÇÃO EXTRA AQUI: Verifica se o Subject existe E se o nome dele não é nulo
+        String nomeDisciplina = (exam.getSubject() != null && exam.getSubject().getName() != null)
+                ? exam.getSubject().getName()
+                : "Geral";
+        lblDisciplina.setText(nomeDisciplina);
+
         lblSemestre.setText(exam.getSemester() != null ? exam.getSemester() : "N/A");
 
         if (exam.getCreationDate() != null) {
@@ -57,7 +60,7 @@ public class DetailsExamController {
         vboxQuestoesProva.getChildren().clear();
 
         if (exam.getQuestions() == null || exam.getQuestions().isEmpty()) {
-            lblTotalQuestoes.setText("0"); // Zera o contador se não houver questões
+            lblTotalQuestoes.setText("0");
             Label lblAviso = new Label("Esta prova não possui questões vinculadas.");
             lblAviso.setStyle("-fx-text-fill: #64748b; -fx-font-style: italic;");
             vboxQuestoesProva.getChildren().add(lblAviso);
@@ -66,7 +69,6 @@ public class DetailsExamController {
 
         int contadorQuestoesReais = 0;
 
-        // Loop criando o layout de cada questão dinamicamente usando as classes do seu question.css
         for (Question q : exam.getQuestions()) {
             VBox cardQuestao = new VBox();
             cardQuestao.setSpacing(12.0);
@@ -83,7 +85,6 @@ public class DetailsExamController {
             Label badgeId = new Label("Q-" + q.getQuestionId());
             badgeId.getStyleClass().add("badge-padrao");
 
-            // Mapeamento visual das cores do badge de dificuldade
             Label badgeDificuldade = new Label();
             badgeDificuldade.getStyleClass().removeAll("badge-facil", "badge-medio", "badge-dificil");
             if (q.getDifficulty() != null) {
@@ -109,7 +110,6 @@ public class DetailsExamController {
             Region mola = new Region();
             HBox.setHgrow(mola, Priority.ALWAYS);
 
-            // Botão de Substituir Questão (Ícone refrescar)
             Button btnSubstituir = new Button();
             btnSubstituir.getStyleClass().add("btn-acao-card");
             btnSubstituir.getStylesheets().add(getClass().getResource("/styles/exam.css").toExternalForm());
@@ -120,7 +120,6 @@ public class DetailsExamController {
                 btnSubstituir.setGraphic(imgRefrescar);
             } catch (Exception ignored) {}
 
-            // Botão de Remover Questão da Prova (Ícone lixo)
             Button btnRemover = new Button();
             btnRemover.getStyleClass().add("btn-acao-card");
             btnRemover.getStylesheets().add(getClass().getResource("/styles/exam.css").toExternalForm());
@@ -133,10 +132,9 @@ public class DetailsExamController {
 
             linhaTop.getChildren().addAll(badgeId, badgeDificuldade, badgeTipo, mola, btnSubstituir, btnRemover);
 
-            // Caminho da disciplina
-            String nomeMateria = exam.getSubject() != null ? exam.getSubject().getName() : "Geral";
+            // PROTEÇÃO EXTRA AQUI TAMBÉM: Caminho da disciplina
             String assunto = q.getTopic() != null ? q.getTopic() : "Geral";
-            Label lblCaminho = new Label(nomeMateria + " > " + assunto);
+            Label lblCaminho = new Label(nomeDisciplina + " > " + assunto); // Reutiliza a variável limpa
             lblCaminho.getStyleClass().add("txt-caminho");
 
             // Enunciado da questão
@@ -144,11 +142,9 @@ public class DetailsExamController {
             lblEnunciado.getStyleClass().add("txt-enunciado");
             lblEnunciado.setWrapText(true);
 
-            // Bloco de conteúdo dinâmico (Alternativas ou Linhas de Resposta)
             VBox boxConteudoEspecifico = new VBox(6.0);
             VBox.setMargin(boxConteudoEspecifico, new Insets(5, 0, 5, 0));
 
-            // Identifica a herança real da questão (Polimorfismo)
             if (q instanceof MultipleChoiceQuestion) {
                 badgeTipo.setText("Múltipla Escolha");
                 MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) q;
@@ -180,11 +176,9 @@ public class DetailsExamController {
                 }
             }
 
-            // Incrementa o contador local e adiciona o card gerado à tela
             contadorQuestoesReais++;
             vboxQuestoesProva.getChildren().add(cardQuestao);
         }
-
 
         lblTotalQuestoes.setText(String.valueOf(contadorQuestoesReais));
     }

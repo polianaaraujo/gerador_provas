@@ -54,7 +54,10 @@ public class CardExamController {
 
         // 3. Preenche Quantidade de Questões vinculadas
         if (lblQtdQuestoes != null) {
-            int total = (exam.getQuestions() != null) ? exam.getQuestions().size() : 0;
+            int total = 0;
+            if (exam.getQuestions() != null) {
+                total = exam.getQuestions().size();
+            }
             lblQtdQuestoes.setText(total + (total == 1 ? " questão" : " questões"));
         }
 
