@@ -12,7 +12,7 @@ import model.entities.Teacher;
 public class TeacherDAO {
 
     public void insert(Teacher teacher) {
-        String sql = "INSERT INTO teacher (user_id, registration_number) VALUES (?, ?)";
+        String sql = "INSERT INTO teacher (teacher_id, registration_number) VALUES (?, ?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -27,7 +27,7 @@ public class TeacherDAO {
     }
 
     public void update(Teacher teacher) {
-        String sql = "UPDATE teacher SET registration_number = ? WHERE user_id = ?";
+        String sql = "UPDATE teacher SET registration_number = ? WHERE teacher_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -42,7 +42,7 @@ public class TeacherDAO {
     }
 
     public List<Teacher> findAll() {
-        String sql = "SELECT t.*, u.* FROM teacher t INNER JOIN user u ON t.user_id = u.id_user WHERE u.status = true";
+        String sql = "SELECT t.*, u.* FROM teacher t INNER JOIN user u ON t.teacher_id = u.id_user WHERE u.status = true";
         List<Teacher> list = new ArrayList<>();
 
         try (Connection conn = ConnectionFactory.getConnection();
@@ -60,7 +60,7 @@ public class TeacherDAO {
     }
 
     public Teacher findById(int userId) {
-        String sql = "SELECT t.*, u.* FROM teacher t INNER JOIN user u ON t.user_id = u.id_user WHERE t.user_id = ?";
+        String sql = "SELECT t.*, u.* FROM teacher t INNER JOIN user u ON t.teacher_id = u.id_user WHERE t.teacher_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

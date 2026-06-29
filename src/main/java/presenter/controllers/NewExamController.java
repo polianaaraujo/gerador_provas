@@ -9,6 +9,7 @@ import model.DAO.SubjectDAO;
 import model.entities.*;
 import model.services.ExamService;
 import model.services.SubjectService;
+import presenter.utils.SceneManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -126,8 +127,6 @@ public class NewExamController {
             novaProva.setSemester(semestre);
             novaProva.setCreationDate(LocalDate.now());
 
-            // Tratando de passar o Título se sua entidade aceitar ou concatenando no padrão do sistema
-            // Se o seu Exam.java tiver set_title() ou similar use: novaProva.setTitle(titulo);
 
             Teacher professorMock = new Teacher();
             User userMock = new User();
@@ -143,12 +142,7 @@ public class NewExamController {
             alert.setContentText("Prova '" + titulo + "' gerada com sucesso contendo " + questoesSelecionadas.size() + " questões!");
             alert.showAndWait();
 
-            // Limpa o formulário
-            txtTitulo.clear();
-            txtQtdFacil.clear();
-            txtQtdMedio.clear();
-            txtQtdDificil.clear();
-            lblTotalQuestoes.setText("--");
+            SceneManager.getInstance().navigateTo("/view/exam.fxml", "Gerenciamento de Provas");
 
         } catch (Exception e) {
             mostrarAlerta("Erro ao Gerar Prova", e.getMessage());

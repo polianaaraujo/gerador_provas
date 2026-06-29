@@ -12,7 +12,7 @@ import model.entities.Admin;
 public class AdminDAO {
 
     public void insert(Admin admin) {
-        String sql = "INSERT INTO admin (user_id) VALUES (?)";
+        String sql = "INSERT INTO admin (admin_id) VALUES (?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -25,9 +25,8 @@ public class AdminDAO {
         }
     }
 
-    // Parâmetro alterado de idAdmin para userId
     public void delete(int userId) {
-        String sql = "DELETE FROM admin WHERE user_id = ?";
+        String sql = "DELETE FROM admin WHERE admin_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -41,7 +40,7 @@ public class AdminDAO {
     }
 
     public List<Admin> findAll() {
-        String sql = "SELECT a.*, u.* FROM admin a INNER JOIN user u ON a.user_id = u.id_user WHERE u.status = true";
+        String sql = "SELECT a.*, u.* FROM admin a INNER JOIN user u ON a.admin_id = u.id_user WHERE u.status = true";
         List<Admin> list = new ArrayList<>();
 
         try (Connection conn = ConnectionFactory.getConnection();
@@ -58,9 +57,8 @@ public class AdminDAO {
         return list;
     }
 
-
     public Admin findById(int userId) {
-        String sql = "SELECT a.*, u.* FROM admin a INNER JOIN user u ON a.user_id = u.id_user WHERE a.user_id = ?";
+        String sql = "SELECT a.*, u.* FROM admin a INNER JOIN user u ON a.admin_id = u.id_user WHERE a.admin_id = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
