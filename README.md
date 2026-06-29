@@ -131,4 +131,7 @@ public class ConnectionFactory {
     private static final String URL = "jdbc:mysql://localhost:3306/gerenciador-provas (ou a sua rota)";
     private static final String USER = "root"; 
     private static final String PASSWORD = "sua_senha_aqui";
+```
+### Link para diagrama de classes
+[link para o draw.io](https://drive.google.com/file/d/1Jml3Z-I0We8ZXm-Fdgyq8o1Ib-P34Z47/view?usp=drive_link)
 

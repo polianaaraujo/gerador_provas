@@ -1,8 +1,13 @@
 package presenter.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,10 +15,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.DAO.ExamDAO;
+import model.DAO.QuestionDAO;
 import model.entities.Exam;
 import model.entities.Question;
 import model.entities.MultipleChoiceQuestion;
+import model.services.ExamService;
 
 import java.time.format.DateTimeFormatter;
 
@@ -28,8 +37,13 @@ public class DetailsExamController {
     @FXML private Button btnFechar;
     @FXML private VBox vboxQuestoesProva;
 
+    private ExamService examService;
+
     @FXML
     public void initialize() {
+
+        this.examService = new ExamService(new ExamDAO(), new QuestionDAO());
+
         btnFechar.setOnAction(e -> {
             Stage stage = (Stage) btnFechar.getScene().getWindow();
             stage.close();
@@ -39,10 +53,8 @@ public class DetailsExamController {
     public void inicializarDados(Exam exam) {
         if (exam == null) return;
 
-        // 1. Preenche os metadados básicos do cabeçalho do Modal
         lblNomeProva.setText("Prova #" + exam.getExamId());
 
-        // PROTEÇÃO EXTRA AQUI: Verifica se o Subject existe E se o nome dele não é nulo
         String nomeDisciplina = (exam.getSubject() != null && exam.getSubject().getName() != null)
                 ? exam.getSubject().getName()
                 : "Geral";
@@ -56,7 +68,7 @@ public class DetailsExamController {
             lblDataCriacao.setText("--/--/----");
         }
 
-        // 2. Limpa o container de questões para renderização limpa
+
         vboxQuestoesProva.getChildren().clear();
 
         if (exam.getQuestions() == null || exam.getQuestions().isEmpty()) {
@@ -130,6 +142,12 @@ public class DetailsExamController {
                 btnRemover.setGraphic(imgLixo);
             } catch (Exception ignored) {}
 
+            // =========================================================
+            // GATILHOS DE EVENTOS ADICIONADOS AQUI
+            // =========================================================
+            btnSubstituir.setOnAction(event -> abrirModalSubstituicao(exam, q));
+            btnRemover.setOnAction(event -> removerQuestao(exam, q));
+
             linhaTop.getChildren().addAll(badgeId, badgeDificuldade, badgeTipo, mola, btnSubstituir, btnRemover);
 
             // PROTEÇÃO EXTRA AQUI TAMBÉM: Caminho da disciplina
@@ -162,7 +180,7 @@ public class DetailsExamController {
             } else {
                 badgeTipo.setText("Discursiva");
 
-                Label lblDiscursivaInfo = new Label("📋 Resposta esperada direto na folha de avaliação.");
+                Label lblDiscursivaInfo = new Label("Resposta esperada direto na folha de avaliação.");
                 lblDiscursivaInfo.setStyle("-fx-font-size: 13px; -fx-text-fill: #2563eb; -fx-font-style: italic;");
                 boxConteudoEspecifico.getChildren().add(lblDiscursivaInfo);
 
@@ -188,5 +206,61 @@ public class DetailsExamController {
         lbl.getStyleClass().add("txt-opcao");
         lbl.setWrapText(true);
         return lbl;
+    }
+
+
+    private void removerQuestao(Exam exam, Question questao) {
+        Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacao.setTitle("Remover Questão");
+        confirmacao.setHeaderText(null);
+        confirmacao.setContentText("Deseja realmente desvincular a questão Q-" + questao.getQuestionId() + " desta prova?");
+
+        confirmacao.showAndWait().ifPresent(resposta -> {
+            if (resposta == ButtonType.OK) {
+                try {
+                    // Remove do banco e do objeto usando o seu serviço
+                    examService.removeQuestion(exam, questao);
+
+                    // Recarrega a tela para a questão sumir imediatamente
+                    inicializarDados(exam);
+
+                } catch (Exception e) {
+                    Alert erro = new Alert(Alert.AlertType.ERROR);
+                    erro.setTitle("Erro");
+                    erro.setHeaderText(null);
+                    erro.setContentText("Não foi possível remover a questão: " + e.getMessage());
+                    erro.showAndWait();
+                }
+            }
+        });
+    }
+
+    private void abrirModalSubstituicao(Exam exam, Question questao) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/replace-question.fxml"));
+            Parent root = loader.load();
+
+            ReplaceQuestionController controller = loader.getController();
+            controller.inicializarDados(exam, questao, this);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Substituir Questão");
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            if (btnFechar != null && btnFechar.getScene() != null) {
+                stage.initOwner(btnFechar.getScene().getWindow());
+            }
+
+            stage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert erro = new Alert(Alert.AlertType.ERROR);
+            erro.setTitle("Erro");
+            erro.setHeaderText(null);
+            erro.setContentText("Não foi possível abrir a tela de substituição.");
+            erro.showAndWait();
+        }
     }
 }

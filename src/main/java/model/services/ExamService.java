@@ -113,6 +113,15 @@ public class ExamService {
             examDAO.unlinkQuestion(exam.getExamId(), question.getQuestionId());
         }
     }
+    public void replaceQuestion(Exam exam, Question oldQuestion, Question newQuestion) {
+        if (exam == null || oldQuestion == null || newQuestion == null) {
+            throw new RegraNegocioException("Dados inválidos para substituição de questão.");
+        }
+
+        // Reutiliza a lógica robusta que você já construiu
+        removeQuestion(exam, oldQuestion);
+        addQuestion(exam, newQuestion);
+    }
 
     public void saveGeneratedExam(Exam exam, List<Question> generatedQuestions) {
         if (generatedQuestions == null || generatedQuestions.isEmpty()) {
